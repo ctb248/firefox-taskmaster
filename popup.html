@@ -24,6 +24,7 @@
         font-size: 12px;
         font-weight: bold;
         letter-spacing: 2px;
+        margin-bottom: 3px;
       }
 
       input {
@@ -97,17 +98,45 @@
       .edit-btn {
         margin-left: 10px;
       }
+
+      .run-tab-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #runCurrentDomain {
+        background-color: rgb(211, 41, 211);
+        color: white;
+        width: 200px;
+        font-size: 20px;
+        height: 50px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <h1>TaskMaster</h1>
+
     <div class="tab-container">
-      <div class="tab" id="scriptEntryTab">+ Add</div>
-      <div class="tab" id="listViewTab">Saved Scripts</div>
+      <div class="tab" data-tab="runScript">Run Script</div>
+      <div class="tab" data-tab="scriptEntry">Script Entry</div>
+      <div class="tab" data-tab="listView">List View</div>
+    </div>
+
+    <div class="tab-content" id="runScript">
+      <div class="run-tab-container">
+        <p>Run saved script for the current domain</p>
+        <button id="runCurrentDomain">Run Script</button>
+      </div>
     </div>
 
     <div class="tab-content" id="scriptEntry">
-      <label for="domain">Domain</label>
+      <label for="domain">Domain Contains</label>
       <input type="text" id="domain" />
       <br />
       <label for="script">Script</label>

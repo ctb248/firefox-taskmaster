@@ -1,11 +1,18 @@
 document.getElementById("save").addEventListener("click", saveScript);
 document.getElementById("run").addEventListener("click", runScript);
-document
-  .getElementById("scriptEntryTab")
-  .addEventListener("click", () => switchTab("scriptEntry"));
-document
-  .getElementById("listViewTab")
-  .addEventListener("click", () => switchTab("listView"));
+// document
+//   .getElementById("scriptEntryTab")
+//   .addEventListener("click", () => switchTab("scriptEntry"));
+// document
+//   .getElementById("listViewTab")
+//   .addEventListener("click", () => switchTab("listView"));
+
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+});
+
+const domainInput = document.getElementById("domain");
+const scriptInput = document.getElementById("script");
 
 function saveScript() {
   const domain = document.getElementById("domain").value;
@@ -16,6 +23,8 @@ function saveScript() {
     data[domain] = script;
     browser.storage.local.set(data).then(() => {
       document.getElementById("status").innerText = "Script saved!";
+      domainInput.value = "";
+      scriptInput.value = "";
       loadDomainsList();
     });
   }
@@ -40,10 +49,9 @@ function runScript() {
 
 function editScript(domain, script) {
   switchTab("scriptEntry");
-  const domainInput = document.getElementById("domain");
+
   domainInput.value = domain;
 
-  const scriptInput = document.getElementById("script");
   scriptInput.value = script;
 }
 
@@ -86,10 +94,12 @@ function switchTab(tabId) {
     tabContents[i].classList.remove("visible");
   }
 
-  document.getElementById(tabId).classList.add("visible");
-  document.getElementById(`${tabId}Tab`).classList.add("active");
-}
+  const selectedTab = document.querySelector(`[data-tab='${tabId}']`);
+  const selectedContent = document.getElementById(tabId);
 
+  selectedTab.classList.add("active");
+  selectedContent.classList.add("visible");
+}
 // Initialize the UI
 loadDomainsList();
 switchTab("scriptEntry");
