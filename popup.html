@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>One-Click Script Runner</title>
+    <link rel="stylesheet" href="popup.css" />
+    <style>
+      html {
+        width: 400px;
+        border: none;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #443e48;
+        color: #f8f4f4;
+        width: 400px;
+        padding: 8px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      label {
+        display: block;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        margin-bottom: 10px;
+        outline: none;
+        border: none;
+        color: #f8f4f4;
+        background: #131114;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 8px;
+        min-height: 200px;
+        margin-bottom: 10px;
+        outline: none;
+        box-sizing: border-box;
+        border: none;
+        color: #f8f4f4;
+        background: #131114;
+      }
+
+      .tab-container {
+        padding-bottom: 10px;
+      }
+
+      .tab {
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 5px;
+        background-color: lightgray;
+        color: #666;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+
+      .active {
+        background: rgb(211, 41, 211);
+        color: white;
+        font-weight: bold;
+      }
+      .tab-content {
+        display: none;
+      }
+
+      .visible {
+        display: block;
+      }
+
+      .btn-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .btn {
+        /* background-color: rgb(24, 86, 241); */
+        background-color: rgb(211, 41, 211);
+        color: white;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 5px;
+      }
+
+      .edit-btn {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TaskMaster</h1>
+    <div class="tab-container">
+      <div class="tab" id="scriptEntryTab">+ Add</div>
+      <div class="tab" id="listViewTab">Saved Scripts</div>
+    </div>
+
+    <div class="tab-content" id="scriptEntry">
+      <label for="domain">Domain</label>
+      <input type="text" id="domain" />
+      <br />
+      <label for="script">Script</label>
+      <textarea id="script"></textarea>
+      <br />
+      <div class="btn-container">
+        <button class="btn" id="save">Save Script</button>
+        <button class="btn" id="run">Run Script</button>
+      </div>
+      <div id="status"></div>
+    </div>
+
+    <div class="tab-content" id="listView">
+      <h2>Saved Domains</h2>
+      <ul id="domainsList"></ul>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

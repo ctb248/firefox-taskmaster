@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "One-Click Script Runner",
+  "version": "1.0",
+  "description": "Save JavaScript scripts and run them with one click on a specified domain",
+  "permissions": ["storage", "activeTab", "tabs"],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"]
+    }
+  ]
+}
