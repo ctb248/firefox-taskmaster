@@ -95,6 +95,8 @@ function loadDomainsList() {
   });
 }
 
+// Hello
+
 function switchTab(tabId) {
   const tabs = document.getElementsByClassName("tab");
   const tabContents = document.getElementsByClassName("tab-content");
