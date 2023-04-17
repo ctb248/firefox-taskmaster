@@ -13,6 +13,10 @@ const editor = CodeMirror.fromTextArea(scriptInput, {
   mode: "javascript",
 });
 
+function setStatus(status) {
+  document.getElementById("status").innerText = status;
+}
+
 function saveScript() {
   const domain = domainInput.value;
   const script = scriptInput.value;
@@ -21,7 +25,7 @@ function saveScript() {
     const data = {};
     data[domain] = script;
     browser.storage.local.set(data).then(() => {
-      document.getElementById("status").innerText = "Script saved!";
+      setStatus("Script saved!");
       domainInput.value = "";
       scriptInput.value = "";
       loadDomainsList();
