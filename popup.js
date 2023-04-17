@@ -95,7 +95,7 @@ function loadDomainsList() {
   });
 }
 
-// Hello
+// Helloooo?
 
 function switchTab(tabId) {
   const tabs = document.getElementsByClassName("tab");
