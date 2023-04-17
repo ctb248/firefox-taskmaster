@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    />
     <title>One-Click Script Runner</title>
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="lib/codemirror.min.css" />
+    <link rel="stylesheet" href="lib/monokai.min.css" />
+
+    <script type="text/javascript" src="lib/codemirror.min.js"></script>
+    <script type="text/javascript" src="lib/javascript.min.js"></script>
+    <!-- <link rel="stylesheet" href="popup.css" /> -->
+
     <style>
       html {
         width: 400px;
@@ -10,13 +20,14 @@
       }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: #443e48;
+        background: #2e2e2e;
         color: #f8f4f4;
         width: 400px;
         padding: 8px;
       }
       h1 {
         font-size: 22px;
+        font-family: "Courier New", Courier, monospace;
       }
       label {
         display: block;
@@ -35,10 +46,10 @@
         outline: none;
         border: none;
         color: #f8f4f4;
-        background: #131114;
+        background: #272822;
       }
 
-      textarea {
+      /* textarea {
         width: 100%;
         padding: 8px;
         min-height: 200px;
@@ -48,10 +59,10 @@
         border: none;
         color: #f8f4f4;
         background: #131114;
-      }
+      } */
 
       .tab-container {
-        padding-bottom: 10px;
+        padding-bottom: 15px;
       }
 
       .tab {
@@ -66,7 +77,7 @@
       }
 
       .active {
-        background: rgb(211, 41, 211);
+        background: #9e86c8;
         color: white;
         font-weight: bold;
       }
@@ -86,7 +97,7 @@
 
       .btn {
         /* background-color: rgb(24, 86, 241); */
-        background-color: rgb(211, 41, 211);
+        background-color: #9e86c8;
         color: white;
         border: none;
         outline: none;
@@ -97,6 +108,22 @@
 
       .edit-btn {
         margin-left: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .script-item {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid #666;
+      }
+
+      .script-item span {
+        flex: 1;
       }
 
       .run-tab-container {
@@ -107,15 +134,35 @@
       }
 
       #runCurrentDomain {
-        background-color: rgb(211, 41, 211);
+        background-color: #b05279;
         color: white;
-        width: 200px;
+        width: 160px;
         font-size: 20px;
-        height: 50px;
-        border-radius: 10px;
+        height: 40px;
+        border-radius: 20px;
         border: none;
         outline: none;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #runCurrentDomain svg {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+
+      svg {
+        /* Add any desired styles here */
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
     </style>
   </head>
@@ -131,7 +178,23 @@
     <div class="tab-content" id="runScript">
       <div class="run-tab-container">
         <p>Run saved script for the current domain</p>
-        <button id="runCurrentDomain">Run Script</button>
+        <button id="runCurrentDomain">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-play-circle"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon></svg
+          >Run Script
+        </button>
       </div>
     </div>
 

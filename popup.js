@@ -1,11 +1,5 @@
 document.getElementById("save").addEventListener("click", saveScript);
 document.getElementById("run").addEventListener("click", runScript);
-// document
-//   .getElementById("scriptEntryTab")
-//   .addEventListener("click", () => switchTab("scriptEntry"));
-// document
-//   .getElementById("listViewTab")
-//   .addEventListener("click", () => switchTab("listView"));
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => switchTab(tab.dataset.tab));
@@ -14,9 +8,14 @@ document.querySelectorAll(".tab").forEach((tab) => {
 const domainInput = document.getElementById("domain");
 const scriptInput = document.getElementById("script");
 
+const editor = CodeMirror.fromTextArea(scriptInput, {
+  theme: "monokai",
+  mode: "javascript",
+});
+
 function saveScript() {
-  const domain = document.getElementById("domain").value;
-  const script = document.getElementById("script").value;
+  const domain = domainInput.value;
+  const script = scriptInput.value;
 
   if (domain && script) {
     const data = {};
@@ -30,21 +29,31 @@ function saveScript() {
   }
 }
 
-function runScript() {
-  browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
-    const activeTab = tabs[0];
-    browser.storage.local.get(activeTab.url).then((result) => {
-      console.log(activeTab);
-      console.log(activeTab.url);
-      const script = result[activeTab.url];
-      if (script) {
-        browser.tabs.sendMessage(activeTab.id, { script });
-      } else {
-        document.getElementById("status").innerText =
-          "No script found for this domain.";
-      }
+async function runScriptForCurrentDomain() {
+  try {
+    const tabs = await browser.tabs.query({
+      active: true,
+      currentWindow: true,
     });
-  });
+    const currentTab = tabs[0];
+    const url = new URL(currentTab.url);
+
+    const storedData = await browser.storage.sync.get(null);
+    const matchingDomain = Object.keys(storedData).find((domain) =>
+      url.includes(domain)
+    );
+
+    if (matchingDomain && storedData[matchingDomain]) {
+      browser.tabs.executeScript({
+        code: storedData[matchingDomain],
+      });
+      setStatus("Script executed.");
+    } else {
+      setStatus("No script found for this domain.");
+    }
+  } catch (error) {
+    setStatus(`Error: ${error}`);
+  }
 }
 
 function editScript(domain, script) {
@@ -69,7 +78,7 @@ function loadDomainsList() {
       const editButton = document.createElement("button");
       editButton.className = "btn edit-btn";
       editButton.dataset.domain = domain;
-      editButton.textContent = "Edit";
+      editButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
 
       editButton.addEventListener("click", () => {
         editScript(domain, items[domain]);
