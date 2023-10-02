@@ -3,7 +3,13 @@
   "name": "One-Click Script Runner",
   "version": "1.0",
   "description": "Save JavaScript scripts and run them with one click on a specified domain",
-  "permissions": ["storage", "activeTab", "tabs"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "<all_urls>"
+  ],
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
@@ -17,8 +23,18 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content_script.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_script.js"
+      ]
     }
-  ]
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  }
 }

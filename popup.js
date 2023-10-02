@@ -1,5 +1,6 @@
 document.getElementById("save").addEventListener("click", saveScript);
 document.getElementById("run").addEventListener("click", runScript);
+document.getElementById("runCurrentDomain").addEventListener("click", runScriptForCurrentDomain);
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => switchTab(tab.dataset.tab));
